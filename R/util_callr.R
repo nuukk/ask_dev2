@@ -24,7 +24,7 @@ boots_sessions <- function(sessions,base_dir,
                            nd_name="nd",
                            tab_name="tab",
                            cdp_name="cdp",
-                           country_code=country_code,
+                           country_code="us",
                            accuracy=100,
                            proxy_url=NULL) {
   
