@@ -1,0 +1,32 @@
+Package: ask2
+Title: ask
+Version: 2.3000.0000
+Authors@R: 
+    person(given = "xx",
+           family = "xx",
+           role = c("aut", "cre"),
+           email='111@111.com')
+Description: 
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a license
+Imports: dplyr,
+         data.table,
+         stringr,
+         lubridate,
+         readxl,
+         writexl,
+        purrr (>= 1.0.0),
+        rlang,
+        magrittr,
+        httr,
+        httr2,
+        jsonlite,
+        readr,
+        googleAuthR,
+        rvest,
+        collapse,
+        telegram.bot,
+        reticulate,
+        progress,
+        callr,
+        mirai
+Encoding: UTF-8
