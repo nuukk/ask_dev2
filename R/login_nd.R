@@ -129,7 +129,7 @@ auto_login <- function(await_name="await",tab_name="tab",env=.GlobalEnv,
       Sys.sleep(1)
     }
     
-    pw_box <- wait_clickable_nd(await=await,tab=tab,xpath='//input[@autocomplete="new-password"]',timeout=10,check_all=F)[[1]]
+    pw_box <- wait_clickable_nd(await=await,tab=tab,xpath='//input[@autocomplete="new-password" or @autocomplete="current-password"]',timeout=10,check_all=F)[[1]]
     Sys.sleep(runif(n=1,min=0.7,max=1.5))
     type_like_human(await_name=await_name,tab_name=tab_name,env=env,element=pw_box,strings=platform_pw,send=TRUE)
     if(length(await(tab$xpath('//button[@data-dd-action-name="Try again"]',timeout=3.5)))>0) {
