@@ -97,7 +97,7 @@ auto_login <- function(await_name="await",tab_name="tab",env=.GlobalEnv,
   await <- get(await_name,envir=env)
   tab <- get(tab_name,envir=env)
   url <- await(tab$evaluate("window.location.href"))
-  platform <- if(str_detect(url,"chatgpt.com")) "gpt" else if(str_detect(url,"perplexity.ai")) "pplx"
+  platform <- if(str_detect(url,"chatgpt.com|openai.com")) "gpt" else if(str_detect(url,"perplexity.ai")) "pplx"
   set.seed(as.numeric(gsub("\\.","",format(Sys.time(),"%H%M%OS5")))/Sys.getpid())
   
   if(!str_detect(platform_id,"@ascentnet.co.jp")) platform_id <- paste0(platform_id,"@ascentnet.co.jp") else platform_id
@@ -129,7 +129,7 @@ auto_login <- function(await_name="await",tab_name="tab",env=.GlobalEnv,
       Sys.sleep(1)
     }
     
-    pw_box <- wait_clickable_nd(await=await,tab=tab,xpath='//input[@autocomplete="current-password"]',timeout=10,check_all=F)[[1]]
+    pw_box <- wait_clickable_nd(await=await,tab=tab,xpath='//input[@autocomplete="new-password"]',timeout=10,check_all=F)[[1]]
     Sys.sleep(runif(n=1,min=0.7,max=1.5))
     type_like_human(await_name=await_name,tab_name=tab_name,env=env,element=pw_box,strings=platform_pw,send=TRUE)
     if(length(await(tab$xpath('//button[@data-dd-action-name="Try again"]',timeout=3.5)))>0) {
