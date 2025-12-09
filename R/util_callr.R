@@ -42,7 +42,7 @@ boots_sessions <- function(sessions,base_dir,
                           args_command,env,start_url,nodriver_name,loop_name,await_name,nd_name,tab_name,cdp_name,country_code,accuracy,proxy_url) {
       for(i in c('lubridate','dplyr','ggplot2','ggrepel','ggthemes','stringr','data.table',
                  'jsonlite','rvest','purrr','httr2','rrapply','callr','gargle','mirai',
-                 'reticulate','ask','collapse','Rcpp','telegram.bot')) {
+                 'reticulate','ask2','collapse','Rcpp','telegram.bot')) {
         tryCatch(suppressPackageStartupMessages(library(i,character.only=TRUE)),
                  error=\(e) { install.packages(i); library(i,character.only=TRUE)} )
       }

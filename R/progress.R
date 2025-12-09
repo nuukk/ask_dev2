@@ -8,12 +8,13 @@ record_log <- function(text1,text2,save_dir,save_file_name,chat_id=NULL,chat_tok
 }
 
 
-record_log2 <- function(country_code="US",language_code="EN",platform,
+record_log2 <- function(country_code="US",language_code="EN",platform,collect_type="initial",
                         keyword,step,total_steps,
                         status="OK",msg=".",save_dir,save_file_name) {
   ans <- list(country_code=toupper(country_code),
               language_code=toupper(language_code),
               platform=platform,
+              collect_type=collect_type,
               keyword=keyword,
               log_time=format(Sys.time(),format="%Y-%m-%d %H:%M:%S %z"),
               step=step,
@@ -29,7 +30,7 @@ record_log2 <- function(country_code="US",language_code="EN",platform,
 
 progress_table <- function(base_dir) {
   child_directories <- list.dirs(base_dir,recursive=F,full.names=T)
-  
+  child_directories <- child_directories[!str_ends(child_directories,"json_raw|err_htmls")]
   paths <- if(length(child_directories)>0) {
     list.files(child_directories,full.names=T,pattern="log$")
   } else {
@@ -47,8 +48,8 @@ progress_table <- function(base_dir) {
     tmp
   }) %>% rbindlist
   
-  res[,log_time:=ymd_hms(log_time)]
-  res[,start_time:=min(log_time),by=.(platform,pid)]
+  res[,log_time:=suppressMessages(ymd_hms(log_time,tz="Asia/Seoul"))]
+  res[,start_time:=min(log_time),by=.(country_code,language_code,platform,com_name,pid)]
   setorder(res,platform,log_time)
   res[,msg:=as.character(msg)]
   res[]
