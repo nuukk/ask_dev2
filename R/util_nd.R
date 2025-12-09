@@ -309,7 +309,6 @@ start_nodriver <- function(args_command=NULL,
   
   
   await_fun(tab_obj$get(start_url))
-  
   invisible(list(args=args,cdp=nodriver_obj$cdp,loop=loop_obj,await=await_fun,nd=nd_obj,tab=tab_obj))
 }
 
