@@ -8,12 +8,14 @@ record_log <- function(text1,text2,save_dir,save_file_name,chat_id=NULL,chat_tok
 }
 
 
-record_log2 <- function(country_code="US",language_code="EN",platform,collect_type="initial",
+record_log2 <- function(country_code="US",language_code="EN",platform,
+                        list_case="weekly",collect_type="initial",
                         keyword,step,total_steps,
                         status="OK",msg=".",save_dir,save_file_name) {
   ans <- list(country_code=toupper(country_code),
               language_code=toupper(language_code),
               platform=platform,
+              list_case=list_case,
               collect_type=collect_type,
               keyword=keyword,
               log_time=format(Sys.time(),format="%Y-%m-%d %H:%M:%S %z"),

@@ -3,7 +3,8 @@ scrap_ppx_nd <- function(keywords,save_dir,save_file_name,delay_time=5,
                          await_name="await",tab_name="tab",env=.GlobalEnv,
                          save_page=FALSE,capture=TRUE,
                          chat_id=NULL,chat_token=NULL,
-                         language_code='EN',country_code='US',collect_type="initial",
+                         language_code='EN',country_code='US',
+                         list_case="weekly",collect_type="initial",
                          temp_chat=FALSE) {
   log_env <- new.env()
   total_steps <- length(keywords)
@@ -302,7 +303,7 @@ scrap_ppx_nd <- function(keywords,save_dir,save_file_name,delay_time=5,
       if(!is.null(chat_id) & !is.null(chat_token)) {
         try(send_msg(chat_id=chat_id,chat_token=chat_token,text=paste("[PPLX 추출 성공......]",keyword)),silent=TRUE)
       }
-      record_log2(country_code=country_code,language_code=language_code,platform='PPLX',collect_type=collect_type,keyword=keyword,step=i,total_steps=total_steps,status="OK",msg=".",save_dir=save_dir,save_file_name=save_file_name)
+      record_log2(country_code=country_code,language_code=language_code,platform='PPLX',list_case=list_case,collect_type=collect_type,keyword=keyword,step=i,total_steps=total_steps,status="OK",msg=".",save_dir=save_dir,save_file_name=save_file_name)
       Sys.sleep(delay_time+runif(n=1,min=0,max=15))
     },
     error=\(e) {
@@ -312,7 +313,7 @@ scrap_ppx_nd <- function(keywords,save_dir,save_file_name,delay_time=5,
                      text=paste(paste0("[PPLX 추출 실패] ",keyword,"……",log_env$pplx_history),
                                 await(tab$evaluate('window.location.href')))),silent=TRUE)
       }
-      record_log2(country_code=country_code,language_code=language_code,platform='PPLX',collect_type=collect_type,keyword=keyword,step=i,total_steps=total_steps,status="Fail",msg=log_env$pplx_history,save_dir=save_dir,save_file_name=save_file_name)
+      record_log2(country_code=country_code,language_code=language_code,platform='PPLX',list_case=list_case,collect_type=collect_type,keyword=keyword,step=i,total_steps=total_steps,status="Fail",msg=log_env$pplx_history,save_dir=save_dir,save_file_name=save_file_name)
       writeLines(await(tab$get_content()),con=file.path(save_dir,"err_htmls",paste0(half_to_full(keyword),".html")))
       await(tab$reload())
       Sys.sleep(delay_time)
@@ -326,7 +327,8 @@ scrap_gpt_nd <- function(keywords,save_dir,save_file_name,delay_time=30,
                          await_name="await",tab_name="tab",env=.GlobalEnv,
                          save_page=FALSE,capture=FALSE,
                          chat_id=NULL,chat_token=NULL,
-                         language_code='EN',country_code='US',collect_type="initial",
+                         language_code='EN',country_code='US',
+                         list_case="weekly",collect_type="initial",
                          project_name=NULL,model="ChatGPT 5",temp_chat=FALSE) {
   log_env <- new.env()
   total_steps <- length(keywords)
@@ -576,7 +578,7 @@ scrap_gpt_nd <- function(keywords,save_dir,save_file_name,delay_time=30,
       if(!is.null(chat_id) & !is.null(chat_token)) {
         try(send_msg(chat_id=chat_id,chat_token=chat_token,text=paste("[Chat GPT 추출 성공......]",keyword)),silent=TRUE)
       }
-      record_log2(country_code=country_code,language_code=language_code,platform='ChatGPT',collect_type=collect_type,keyword=keyword,step=i,total_steps=total_steps,status="OK",msg=".",save_dir=save_dir,save_file_name=save_file_name)
+      record_log2(country_code=country_code,language_code=language_code,platform='ChatGPT',list_case=list_case,collect_type=collect_type,keyword=keyword,step=i,total_steps=total_steps,status="OK",msg=".",save_dir=save_dir,save_file_name=save_file_name)
       Sys.sleep(delay_time+runif(n=1,min=0.5,max=12.5))
     },
     error=\(e) {
@@ -586,7 +588,7 @@ scrap_gpt_nd <- function(keywords,save_dir,save_file_name,delay_time=30,
                      text=paste(paste0("[GPT 추출 실패] ",keyword,"……",log_env$gpt_history),
                                 await(tab$evaluate('window.location.href')))),silent=TRUE)
       }
-      record_log2(country_code=country_code,language_code=language_code,platform='ChatGPT',collect_type=collect_type,keyword=keyword,step=i,total_steps=total_steps,status="Fail",msg=log_env$gpt_history,save_dir=save_dir,save_file_name=save_file_name)
+      record_log2(country_code=country_code,language_code=language_code,platform='ChatGPT',list_case=list_case,collect_type=collect_type,keyword=keyword,step=i,total_steps=total_steps,status="Fail",msg=log_env$gpt_history,save_dir=save_dir,save_file_name=save_file_name)
       writeLines(await(tab$get_content()),con=file.path(save_dir,"err_htmls",paste0(half_to_full(keyword),".html")))
       await(tab$reload())
       Sys.sleep(delay_time)
@@ -598,7 +600,8 @@ scrap_gpt_nd <- function(keywords,save_dir,save_file_name,delay_time=30,
 # GEMINI ========================================================
 scrap_gemini_nd <- function(keywords,save_dir,save_file_name,delay_time=5,
                             await_name="await",tab_name="tab",env=.GlobalEnv,
-                            save_page=FALSE,capture=TRUE,collect_type="initial",
+                            save_page=FALSE,capture=TRUE,
+                            list_case="weekly",collect_type="initial",
                             chat_id=NULL,chat_token=NULL,
                             language_code='EN',country_code='US',login=TRUE) {
   log_env <- new.env()
@@ -723,7 +726,7 @@ scrap_gemini_nd <- function(keywords,save_dir,save_file_name,delay_time=5,
       if(!is.null(chat_id) & !is.null(chat_token)) {
         try(send_msg(chat_id=chat_id,chat_token=chat_token,text=paste("[Gemini 추출 성공......]",keyword)),silent=TRUE)
       }
-      record_log2(country_code=country_code,language_code=language_code,platform='Gemini',collect_type=collect_type,keyword=keyword,step=i,total_steps=total_steps,status="OK",msg=".",save_dir=save_dir,save_file_name=save_file_name)
+      record_log2(country_code=country_code,language_code=language_code,platform='Gemini',list_case=list_case,collect_type=collect_type,keyword=keyword,step=i,total_steps=total_steps,status="OK",msg=".",save_dir=save_dir,save_file_name=save_file_name)
       Sys.sleep(delay_time+runif(n=1,min=0.5,max=log(delay_time+1+0.5)))
     },
     error=\(e) {
@@ -734,7 +737,7 @@ scrap_gemini_nd <- function(keywords,save_dir,save_file_name,delay_time=5,
                                 await(tab$evaluate('window.location.href')))),silent=TRUE)
       }
       writeLines(await(tab$get_content()),con=file.path(save_dir,"err_htmls",paste0(half_to_full(keyword),".html")))
-      record_log2(country_code=country_code,language_code=language_code,platform='Gemini',collect_type=collect_type,keyword=keyword,step=i,total_steps=total_steps,status="Fail",msg=log_env$gemini_history,save_dir=save_dir,save_file_name=save_file_name)
+      record_log2(country_code=country_code,language_code=language_code,platform='Gemini',list_case=list_case,collect_type=collect_type,keyword=keyword,step=i,total_steps=total_steps,status="Fail",msg=log_env$gemini_history,save_dir=save_dir,save_file_name=save_file_name)
       Sys.sleep(delay_time)
       await(tab$reload())
       wait_visible_nd(await=await,tab=tab,'//mat-action-list',timeout=5)
@@ -748,7 +751,8 @@ scrap_ggai_nd <- function(keywords,save_dir,save_file_name,delay_time=5,
                           await_name="await",tab_name="tab",env=.GlobalEnv,
                           save_page=FALSE,capture=TRUE,
                           chat_id=NULL,chat_token=NULL,
-                          language_code='EN',country_code='US',collect_type="initial",
+                          language_code='EN',country_code='US',
+                          list_case="weekly",collect_type="initial",
                           ai_overview=TRUE,ai_mode=TRUE,pretty_url=TRUE,captcha_api_key=NULL) {
   log_env <- new.env()
   log_env$captcha_detect_count <- 0L
@@ -942,7 +946,7 @@ scrap_ggai_nd <- function(keywords,save_dir,save_file_name,delay_time=5,
         log_env$ggai_history <- "데이터 테이블 구성 완료"
         ans[,names(ans)[sapply(ans,\(x) is.character(x))]:=lapply(.SD,replace_comma),.SDcols=names(ans)[sapply(ans,\(x) is.character(x))]]
         fwrite(ans,file=file.path(save_dir,paste0(save_file_name,"-Data.csv")),bom=T,append=T,quote=T)
-        record_log2(country_code=country_code,language_code=language_code,platform='AI Overview',collect_type=collect_type,keyword=keyword,step=i,total_steps=total_steps,status="OK",msg=".",save_dir=save_dir,save_file_name=save_file_name)
+        record_log2(country_code=country_code,language_code=language_code,platform='AI Overview',list_case=list_case,collect_type=collect_type,keyword=keyword,step=i,total_steps=total_steps,status="OK",msg=".",save_dir=save_dir,save_file_name=save_file_name)
         if(!is.null(chat_id) & !is.null(chat_token)) {
           try(send_msg(chat_id=chat_id,chat_token=chat_token,text=paste("[GGAI 추출 성공......]",keyword)),silent=TRUE)
         }
@@ -1029,7 +1033,7 @@ scrap_ggai_nd <- function(keywords,save_dir,save_file_name,delay_time=5,
             if(!is.null(chat_id) & !is.null(chat_token)) {
               try(send_msg(chat_id=chat_id,chat_token=chat_token,text=paste("[AI_Mode 추출 성공......]",keyword)),silent=TRUE)
             }
-            record_log2(country_code=country_code,language_code=language_code,platform='AI Mode',collect_type=collect_type,keyword=keyword,step=i,total_steps=total_steps,status="OK",msg=".",save_dir=save_dir,save_file_name=save_file_name)
+            record_log2(country_code=country_code,language_code=language_code,platform='AI Mode',list_case=list_case,collect_type=collect_type,keyword=keyword,step=i,total_steps=total_steps,status="OK",msg=".",save_dir=save_dir,save_file_name=save_file_name)
             Sys.sleep(delay_time+runif(n=1,min=0.5,max=log(delay_time+1+0.5)))
             ## AI MODE END =================================
           },error=\(e) {
@@ -1058,7 +1062,7 @@ scrap_ggai_nd <- function(keywords,save_dir,save_file_name,delay_time=5,
       }
       writeLines(await(tab$get_content()),con=file.path(save_dir,"err_htmls",paste0(gsub("\\[","",zzz),"_",half_to_full(keyword),".html")))
       await(tab$reload())
-      record_log2(country_code=country_code,language_code=language_code,platform=gsub("\\[","",zzz),collect_type=collect_type,keyword=keyword,step=i,total_steps=total_steps,status="Fail",msg=log_env$ggai_history,save_dir=save_dir,save_file_name=save_file_name)
+      record_log2(country_code=country_code,language_code=language_code,platform=gsub("\\[","",zzz),list_case=list_case,collect_type=collect_type,keyword=keyword,step=i,total_steps=total_steps,status="Fail",msg=log_env$ggai_history,save_dir=save_dir,save_file_name=save_file_name)
       Sys.sleep(delay_time)
     })
   },.progress=TRUE)

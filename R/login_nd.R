@@ -153,7 +153,7 @@ auto_login <- function(await_name="await",tab_name="tab",env=.GlobalEnv,
     Sys.sleep(runif(n=1,min=1.5,max=2.7))
     type_like_human(await_name=await_name,tab_name=tab_name,env=env,element=code_box,strings=verify_code,send=TRUE)
     
-    while(length(await(tab$xpath('//li[text()="인증 코드가 필요합니다"]')))>0) {
+    while(length(await(tab$xpath('//li[text()="인증 코드가 필요합니다" or contains(text(),"Password is required")]')))>0) {
       code_box <- wait_clickable_nd(await=await,tab=tab,xpath='//input[@maxlength="6"]',timeout=10,check_all=F)[[1]]
       await(code_box$click())
       await(code_box$send_keys(as.character(verify_code)))
